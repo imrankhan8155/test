@@ -21,5 +21,3 @@ sql>exit
 impdp system/machine directory=test_dir dumpfile=TEAMSDB_EXPORT_FULL_20170319.DMP logfile=teamsdb_export_full_20170319.log full=yes 
 
 added done
-
-new data
