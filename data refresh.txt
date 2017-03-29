@@ -1,0 +1,23 @@
+aws s3 cp s3://<bucketName>/<folderName>/<filename> <filename>
+sudo cp <filename {that we downloaded}> </u02/oradata>
+sudo 7za x <filename>
+sudo chown -R oracle /u02/oradata
+sudo su oracle
+env|grep -i ORACLE_HOME
+sqlplus sys as sysdba
+sql>select INSTANCE_NAME,HOST_NAME,VERSION from v$instance;
+sql>select count(*) from dba_tables where owner = 'USDAPROD';
+sql>CREATE OR REPLACE DIRECTORY test_dir AS '/u02/oradata';
+sql>GRANT READ, WRITE ON DIRECTORY test_dir TO system;  
+sql>alter database datafile '/u01/app/oracle/product/11.2.0/db1/dbs/usda_ts_tables.dbf' resize 250M;
+sql>alter tablespace USDADEV_TS_TABLES add datafile '/u01/app/oracle/product/11.2.0/db1/dbs/usda_ts_tables02.dbf' size 250M autoextend on;
+sql>Shutdown immediate;
+sql>startup restrict;
+sql>drop user TEST cascade;
+sql>Shutdown immediate;
+sql>startup;
+sql>drop user USDAPROD CASCADE;
+sql>exit
+impdp system/machine directory=test_dir dumpfile=TEAMSDB_EXPORT_FULL_20170319.DMP logfile=teamsdb_export_full_20170319.log full=yes 
+
+
